@@ -77,6 +77,12 @@ export class BootScene extends Phaser.Scene {
     this.load.image('ui_result_failure_icon', 'assets/ui/ui_result_failure_icon_00.png');
     this.load.image('ui_result_victory_icon', 'assets/ui/ui_result_victory_icon_00.png');
 
+    // Plant card art (loaded even if missing — textures.exists used at runtime)
+    this.load.image('ui_card_shootbud', 'assets/ui/ui_card_shootbud_00.png');
+
+    // Shellbug armor overlay (single static frame)
+    this.load.image('shellbug_armor_overlay', 'assets/enemies/enemy_shellbug_armor_overlay_00.png');
+
     // SFX — OGG primary, MP3 fallback (#t26 assets)
     for (const key of Object.values(SFX)) {
       this.load.audio(key, [

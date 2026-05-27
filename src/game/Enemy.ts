@@ -17,6 +17,7 @@ export class Enemy extends Phaser.GameObjects.Container {
   private attackTimer = 0;
   private hpBar: Phaser.GameObjects.Rectangle;
   private sprite: Phaser.GameObjects.Sprite | null = null;
+  private armorOverlaySprite: Phaser.GameObjects.Image | null = null;
   dead = false;
   reachedBase = false;
   targetPlant: import('./Plant').Plant | null = null;
@@ -41,6 +42,17 @@ export class Enemy extends Phaser.GameObjects.Container {
       sprite.setFlipX(true); // enemies face left
       this.sprite = sprite;
       this.add(sprite);
+
+      // Shellbug: static armor overlay on top (hidden when armor breaks)
+      if (config.id === 'shellbug' && scene.textures.exists('shellbug_armor_overlay')) {
+        const overlay = scene.add.image(0, sprite.y, 'shellbug_armor_overlay');
+        overlay.setOrigin(0.5, 0.5);
+        overlay.setScale(SPRITE_SCALE);
+        overlay.setFlipX(true);
+        this.armorOverlaySprite = overlay;
+        this.add(overlay);
+      }
+
       const animKey = `${config.id}_walk`;
       if (scene.anims.exists(animKey)) sprite.play(animKey);
     } else {
@@ -127,6 +139,11 @@ export class Enemy extends Phaser.GameObjects.Container {
 
   private breakArmor(): void {
     this.armorBroken = true;
+    // Remove shellbug armor overlay on break
+    if (this.armorOverlaySprite) {
+      this.armorOverlaySprite.destroy();
+      this.armorOverlaySprite = null;
+    }
     if (this.config.isBoss) {
       this.speed *= 2.5;
       const breakKey = 'bossbelly_armor_break';

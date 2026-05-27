@@ -126,10 +126,24 @@ export class GameScene extends Phaser.Scene {
       const cx = cardStartX + i * cardSpacing;
       const cy = uiY + 40;
 
-      const bg = this.add.rectangle(cx, cy, 100, 56, 0x1b3a11)
+      // Card art background (128×128 PNG scaled to card slot)
+      const cardKey = `ui_card_${plantId}`;
+      const hasArt = this.textures.exists(cardKey);
+      if (hasArt) {
+        this.add.image(cx, cy, cardKey).setDisplaySize(100, 56).setDepth(29);
+      } else {
+        // Idle sprite thumbnail as fallback
+        const idleKey = `${plantId}_idle_00`;
+        if (this.textures.exists(idleKey)) {
+          this.add.image(cx + 22, cy, idleKey).setDisplaySize(48, 48).setDepth(29).setAlpha(0.75);
+        }
+      }
+
+      const bg = this.add.rectangle(cx, cy, 100, 56, hasArt ? 0x000000 : 0x1b3a11)
         .setInteractive()
         .setDepth(30)
         .setStrokeStyle(2, 0x4caf50);
+      if (hasArt) bg.setFillStyle(0x000000, 0.2);
 
       const highlight = this.add.rectangle(cx, cy, 100, 56, 0xffffff, 0)
         .setDepth(31);
@@ -137,18 +151,21 @@ export class GameScene extends Phaser.Scene {
 
       this.add.text(cx, cy - 12, cfg.name, {
         fontSize: '13px', color: '#c8e6c9', fontStyle: 'bold',
+        stroke: '#000000', strokeThickness: 2,
       }).setOrigin(0.5).setDepth(32);
 
       this.add.text(cx, cy + 8, `⊙ ${cfg.cost}`, {
         fontSize: '13px', color: '#fdd835',
+        stroke: '#000000', strokeThickness: 2,
       }).setOrigin(0.5).setDepth(32);
 
       bg.on('pointerover', () => {
         if (!this.sunSystem.canAfford(cfg.cost)) return;
-        bg.setFillStyle(0x2e5a1a);
+        bg.setFillStyle(hasArt ? 0x224400 : 0x2e5a1a, hasArt ? 0.5 : 1);
       });
       bg.on('pointerout', () => {
-        if (this.selectedPlant !== plantId) bg.setFillStyle(0x1b3a11);
+        if (this.selectedPlant !== plantId)
+          bg.setFillStyle(hasArt ? 0x000000 : 0x1b3a11, hasArt ? 0.2 : 1);
       });
       bg.on('pointerdown', () => this.selectPlant(plantId, i, cfg));
     });
