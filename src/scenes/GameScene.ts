@@ -213,7 +213,8 @@ export class GameScene extends Phaser.Scene {
       if (!this.selectedPlant || this.state !== 'playing') return;
       const cell = worldToCell(ptr.x, ptr.y);
       if (!cell) {
-        this.deselect();
+        // Don't deselect when clicking the card strip below the grid
+        if (ptr.y < GRID_ORIGIN_Y + GRID_ROWS * CELL_SIZE) this.deselect();
         return;
       }
       if (this.grid.isOccupied(cell.col, cell.row)) return;
