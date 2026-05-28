@@ -39,7 +39,6 @@ export class BootScene extends Phaser.Scene {
     // Plants — burstbloom
     this.loadFrames('burstbloom_idle', 'assets/plants/plant_burstbloom_idle_', 6);
     this.loadFrames('burstbloom_charge', 'assets/plants/plant_burstbloom_charge_', 6);
-    this.loadFrames('burstbloom_explode', 'assets/plants/plant_burstbloom_explode_', 8);
     this.loadFrames('burstbloom_hit', 'assets/plants/plant_burstbloom_hit_', 3);
     this.loadFrames('burstbloom_death', 'assets/plants/plant_burstbloom_death_', 6);
 
@@ -57,11 +56,10 @@ export class BootScene extends Phaser.Scene {
 
     // Enemies — bossbelly
     this.loadFrames('bossbelly_walk', 'assets/enemies/enemy_bossbelly_walk_', 6);
-    this.loadFrames('bossbelly_attack', 'assets/enemies/enemy_bossbelly_attack_', 4);
+    this.loadFrames('bossbelly_attack', 'assets/enemies/enemy_bossbelly_attack_', 6);
     this.loadFrames('bossbelly_hit', 'assets/enemies/enemy_bossbelly_hit_', 3);
     this.loadFrames('bossbelly_death', 'assets/enemies/enemy_bossbelly_death_', 6);
-    this.loadFrames('bossbelly_armor_break', 'assets/enemies/enemy_bossbelly_armor_break_', 5);
-    this.loadFrames('bossbelly_charge', 'assets/enemies/enemy_bossbelly_charge_', 6);
+    this.loadFrames('bossbelly_armor_break', 'assets/enemies/enemy_bossbelly_armor_break_', 1);
 
     // FX
     this.loadFrames('projectile_spore', 'assets/ui/projectile_spore_', 4);
@@ -133,7 +131,6 @@ export class BootScene extends Phaser.Scene {
       { key: 'mosswall_death',  prefix: 'mosswall_death',  count: 6, fps: 8,  loop: false },
       { key: 'burstbloom_idle',    prefix: 'burstbloom_idle',    count: 6, fps: 5,  loop: true },
       { key: 'burstbloom_charge',  prefix: 'burstbloom_charge',  count: 6, fps: 8,  loop: false },
-      { key: 'burstbloom_explode', prefix: 'burstbloom_explode', count: 8, fps: 12, loop: false },
       { key: 'burstbloom_hit',     prefix: 'burstbloom_hit',     count: 3, fps: 10, loop: false },
       { key: 'burstbloom_death',   prefix: 'burstbloom_death',   count: 6, fps: 8,  loop: false },
       // Enemies
@@ -146,11 +143,10 @@ export class BootScene extends Phaser.Scene {
       { key: 'shellbug_hit',    prefix: 'shellbug_hit',    count: 3, fps: 10, loop: false },
       { key: 'shellbug_death',  prefix: 'shellbug_death',  count: 6, fps: 8,  loop: false },
       { key: 'bossbelly_walk',        prefix: 'bossbelly_walk',        count: 6, fps: 5,  loop: true },
-      { key: 'bossbelly_attack',      prefix: 'bossbelly_attack',      count: 4, fps: 7,  loop: true },
+      { key: 'bossbelly_attack',      prefix: 'bossbelly_attack',      count: 6, fps: 7,  loop: true },
       { key: 'bossbelly_hit',         prefix: 'bossbelly_hit',         count: 3, fps: 10, loop: false },
       { key: 'bossbelly_death',       prefix: 'bossbelly_death',       count: 6, fps: 6,  loop: false },
-      { key: 'bossbelly_armor_break', prefix: 'bossbelly_armor_break', count: 5, fps: 8,  loop: false },
-      { key: 'bossbelly_charge',      prefix: 'bossbelly_charge',      count: 6, fps: 10, loop: true },
+      { key: 'bossbelly_armor_break', prefix: 'bossbelly_armor_break', count: 1, fps: 8,  loop: false },
       // FX
       { key: 'projectile_spore', prefix: 'projectile_spore', count: 4, fps: 12, loop: true },
       { key: 'fx_explosion',     prefix: 'fx_explosion',     count: 8, fps: 14, loop: false },

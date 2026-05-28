@@ -147,11 +147,11 @@ export class Enemy extends Phaser.GameObjects.Container {
     if (this.config.isBoss) {
       this.speed *= 2.5;
       const breakKey = 'bossbelly_armor_break';
-      const chargeKey = 'bossbelly_charge';
+      const walkKey = 'bossbelly_walk';
       if (this.sprite && this.scene.anims.exists(breakKey)) {
         this.sprite.play(breakKey).once('animationcomplete', () => {
-          if (!this.dead && this.sprite && this.scene.anims.exists(chargeKey)) {
-            this.sprite.play(chargeKey);
+          if (!this.dead && this.sprite && this.scene.anims.exists(walkKey)) {
+            this.sprite.play(walkKey);
           }
         });
       }

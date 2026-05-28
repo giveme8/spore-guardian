@@ -115,8 +115,9 @@ export class Plant extends Phaser.GameObjects.Container {
 
   private triggerExplosion(bullets: Bullet[]): void {
     this.exploded = true;
-    if (this.sprite && this.scene.anims.exists('burstbloom_explode')) {
-      this.sprite.play('burstbloom_explode').once('animationcomplete', () => this.die());
+    const deathKey = `${this.config.id}_death`;
+    if (this.sprite && this.scene.anims.exists(deathKey)) {
+      this.sprite.play(deathKey).once('animationcomplete', () => this.die());
     }
     const aoe = new Bullet(this.scene, this.x, this.y, this.config.attackDamage, 0, true, 130);
     bullets.push(aoe);
