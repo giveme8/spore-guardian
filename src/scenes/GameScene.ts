@@ -119,45 +119,51 @@ export class GameScene extends Phaser.Scene {
     }).setOrigin(0.5).setDepth(31);
 
     // Plant card strip
-    const cardStartX = 160;
-    const cardSpacing = 110;
+    const cardStartX = 164;
+    const cardSpacing = 122;
+    const cardWidth = 112;
+    const cardHeight = 64;
     PLANT_ORDER.forEach((plantId, i) => {
       const cfg = PLANTS[plantId];
       const cx = cardStartX + i * cardSpacing;
       const cy = uiY + 40;
 
-      // Card art background (128×128 PNG scaled to card slot)
+      // Card art badge (keep source square; never squash premium portraits into a wide strip)
       const cardKey = `ui_card_${plantId}`;
       const hasArt = this.textures.exists(cardKey);
+      const bg = this.add.rectangle(cx, cy, cardWidth, cardHeight, hasArt ? 0x071708 : 0x1b3a11)
+        .setInteractive()
+        .setDepth(30)
+        .setStrokeStyle(2, 0x4caf50);
+      if (hasArt) bg.setFillStyle(0x071708, 0.88);
+
+      this.add.rectangle(cx - 30, cy, 54, 54, 0x10220c, 0.95)
+        .setDepth(31)
+        .setStrokeStyle(1, 0xf5d76a, hasArt ? 0.8 : 0.25);
+
       if (hasArt) {
-        this.add.image(cx, cy, cardKey).setDisplaySize(100, 56).setDepth(29);
+        this.add.image(cx - 30, cy, cardKey).setDisplaySize(50, 50).setDepth(32);
       } else {
         // Idle sprite thumbnail as fallback
         const idleKey = `${plantId}_idle_00`;
         if (this.textures.exists(idleKey)) {
-          this.add.image(cx + 22, cy, idleKey).setDisplaySize(48, 48).setDepth(29).setAlpha(0.75);
+          this.add.image(cx - 30, cy, idleKey).setDisplaySize(48, 48).setDepth(32).setAlpha(0.75);
         }
       }
 
-      const bg = this.add.rectangle(cx, cy, 100, 56, hasArt ? 0x000000 : 0x1b3a11)
-        .setInteractive()
-        .setDepth(30)
-        .setStrokeStyle(2, 0x4caf50);
-      if (hasArt) bg.setFillStyle(0x000000, 0.2);
-
-      const highlight = this.add.rectangle(cx, cy, 100, 56, 0xffffff, 0)
-        .setDepth(31);
+      const highlight = this.add.rectangle(cx, cy, cardWidth, cardHeight, 0xffffff, 0)
+        .setDepth(33);
       this.cardHighlights.push(highlight);
 
-      this.add.text(cx, cy - 12, cfg.name, {
-        fontSize: '13px', color: '#c8e6c9', fontStyle: 'bold',
+      this.add.text(cx + 24, cy - 12, cfg.name, {
+        fontSize: '12px', color: '#e7f6d7', fontStyle: 'bold',
         stroke: '#000000', strokeThickness: 2,
-      }).setOrigin(0.5).setDepth(32);
+      }).setOrigin(0.5).setDepth(34);
 
-      this.add.text(cx, cy + 8, `⊙ ${cfg.cost}`, {
-        fontSize: '13px', color: '#fdd835',
+      this.add.text(cx + 24, cy + 12, `⊙ ${cfg.cost}`, {
+        fontSize: '14px', color: '#fdd835', fontStyle: 'bold',
         stroke: '#000000', strokeThickness: 2,
-      }).setOrigin(0.5).setDepth(32);
+      }).setOrigin(0.5).setDepth(34);
 
       bg.on('pointerover', () => {
         if (!this.sunSystem.canAfford(cfg.cost)) return;
